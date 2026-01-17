@@ -1,7 +1,7 @@
 
-Upcoming Version = v0.36 Alpha = 🛠️
+Upcoming Version = v0.37 Alpha = 🛠️
 
-Latest Version =v0.35 Alpha = 🟢
+Latest Version = v0.36 Alpha = 🟢
 
 Emoji Means:
 
