@@ -2,7 +2,8 @@
 v0.36 Alpha = 🛠️
 Previous Version = v0.35 Alpha
 
-Status:
+Emoji Means:
+
 🟢 Green  – Maintained / Running
 
 🟡 Yellow – Needs Update
