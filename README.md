@@ -1,5 +1,5 @@
 
-Upcoming Version = v0.44 Alpha = 🔴
+Upcoming Version = v0.43.2 Alpha = 🔨
 
 Latest Version = v0.43 Alpha = 🟢
 
