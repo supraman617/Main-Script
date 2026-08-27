@@ -1,0 +1,84 @@
+local ReplicatedStore = game:GetService("ReplicatedStorage")
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+local OriginalGravity = workspace.Gravity
+local SecondLiveConnection
+
+local function setupSecondLive()
+    local humanoid = player.Character and player.Character:FindFirstChild("Humanoid") or player.Character:WaitForChild("Humanoid")
+
+    if SecondLiveConnection then
+        SecondLiveConnection:Disconnect()
+    end
+
+    SecondLiveConnection = humanoid.Died:Connect(function()
+        task.delay(0.5, function()
+            workspace.Gravity = 0
+
+            local char = player.Character
+            if not char then return end
+
+            local hum = char:FindFirstChild("Humanoid")
+            local root = char:FindFirstChild("HumanoidRootPart")
+            if not hum or not root then return end
+
+            local gui = player:FindFirstChild("PlayerGui")
+            if gui then
+                local ui = gui:FindFirstChild("MainUI")
+                if ui then
+                    local d1 = ui:FindFirstChild("DeathPanel")
+                    if d1 then d1:Destroy() end
+
+                    local d2 = ui:FindFirstChild("Death")
+                    if d2 then d2:Destroy() end
+                end
+            end
+
+            hum.Health = hum.MaxHealth
+            hum.AutomaticScalingEnabled = true
+
+            if char:GetAttribute("Stunned") then
+                char:SetAttribute("Stunned", false)
+            end
+
+            local room = ReplicatedStore.GameData.LatestRoom.Value
+            local rm = workspace.CurrentRooms:FindFirstChild(room)
+            local door = rm and rm:FindFirstChild("Door") and rm.Door:FindFirstChild("Door")
+
+            if door then
+                root.CFrame = door.CFrame + Vector3.new(0, 3, 0)
+
+                task.delay(1, function()
+                    if SecondLiveConnection then
+                        workspace.Gravity = OriginalGravity
+                    end
+                end)
+            end
+        end)
+    end)
+end
+
+local currentRoom = player:GetAttribute("CurrentRoom") or ReplicatedStore.GameData.LatestRoom.Value
+
+if currentRoom >= 1 then
+    setupSecondLive()
+
+    player.CharacterAdded:Connect(function()
+        setupSecondLive()
+    end)
+
+    task.wait(1)
+    replicatesignal(player.kill) -- unchanged (your request)
+
+    task.wait(1)
+game:GetService("StarterGui"):SetCoreGuiEnabled("Backpack", true)
+    player:SetAttribute("Alive", true)
+    player:SetAttribute("FakeDeath", true)
+
+    game:GetService("StarterGui"):SetCore("SendNotification", {
+    Title = "Fake Death",
+    Text = "Pick up a bandage to restore all interactions",
+    Duration = 5
+})
+end
