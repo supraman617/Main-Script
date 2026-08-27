@@ -1,0 +1,3 @@
+while task.wait(0.1) do
+    game.ReplicatedStorage.RemotesFolder.Crouch:FireServer(true, true)
+end
