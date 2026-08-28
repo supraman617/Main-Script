@@ -1,3 +1,4 @@
+while task.wait(0.1) do
 local Character = game.Players.LocalPlayer.Character
 
 for _, Part in Character:GetDescendants() do
