@@ -1,3 +1,5 @@
+i'm sick right now so there might be no update 
+
 DOORS Fake Death Work Like Godmode,Anticheat Bypass and much more but then Anticheat Bypass broken after cutscene youre still invincible tho
 
 Upcoming Version = v0.44 Alpha = 🛠️
